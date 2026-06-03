@@ -40,6 +40,11 @@ describe "Nave de carga" {
 		naveLlena.prepararseParaViaje()
 		assert.equals(300000, naveLlena.velocidad())
 	}
+	test "Nave sin pasajeros se encuentra con enemigo"{
+		naveLlena.encontrarEnemigo()
+		assert.equals(300000, naveLlena.velocidad())
+		assert.equals(0, naveLlena.carga())
+	}
 }
 
 describe "Nave de pasajeros" {
