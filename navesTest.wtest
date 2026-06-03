@@ -83,8 +83,7 @@ describe "Nave de pasajeros" {
 	}
 
 	test "Nave sin pasajeros se encuentra con enemigo"{
-		naveSinPasajeros.recibirAmenaza()
-		naveSinPasajeros.propulsarse()
+		naveSinPasajeros.encontrarEnemigo()
 		assert.equals(20000, naveSinPasajeros.velocidad())
 		assert.that(naveSinPasajeros.alarma())
 	}

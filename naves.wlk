@@ -1,12 +1,16 @@
 class Nave{
 	var property velocidad = 0
-	method recibirAmenaza(){
-	}
+	method recibirAmenaza()
+	
 	method propulsarse(){
 			velocidad = (velocidad + 20000).min(300000)
 	}
 	method prepararseParaViaje(){
 		velocidad = (velocidad + 15000).min(300000)
+	}
+	method encontrarEnemigo(){
+		self.recibirAmenaza()
+		self.propulsarse()
 	}
 }
 class NaveDeCarga inherits Nave {
