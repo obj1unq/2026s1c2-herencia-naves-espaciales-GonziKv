@@ -3,14 +3,17 @@ class Nave{
 	method recibirAmenaza()
 	
 	method propulsarse(){
-			velocidad = (velocidad + 20000).min(300000)
+		self._propulsarse(20000)
 	}
 	method prepararseParaViaje(){
-		velocidad = (velocidad + 15000).min(300000)
+		self._propulsarse(15000)
 	}
 	method encontrarEnemigo(){
 		self.recibirAmenaza()
 		self.propulsarse()
+	}
+	method _propulsarse(cant){
+		velocidad = (velocidad + cant).min(300000)
 	}
 }
 class NaveDeCarga inherits Nave {
