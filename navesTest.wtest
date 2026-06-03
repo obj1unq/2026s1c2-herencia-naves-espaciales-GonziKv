@@ -25,7 +25,21 @@ describe "Nave de carga" {
 		naveLlena.recibirAmenaza()
 		assert.equals(0, naveVacia.carga())
 	}
+	
+	test "propulsarse"{
+		naveVacia.propulsarse()
+		assert.equals(20000, naveVacia.velocidad())
+	}
+	
+	test "Prepararse para viaje con nave vacia"{
+		naveVacia.prepararseParaViaje()
+		assert.equals(15000, naveVacia.velocidad())
+	}
 
+	test "Prepararse para viaje con nave llena"{
+		naveLlena.prepararseParaViaje()
+		assert.equals(300000, naveLlena.velocidad())
+	}
 }
 
 describe "Nave de pasajeros" {
@@ -53,7 +67,27 @@ describe "Nave de pasajeros" {
 		naveSinPasajeros.recibirAmenaza()
 		assert.that(naveSinPasajeros.alarma())
 	}
+	test "propulsarse"{
+		naveConPasajeros.propulsarse()
+		assert.equals(300000, naveConPasajeros.velocidad())
+	}
 
+	test "Prepararse para viaje con nave sin pasajeros"{
+		naveSinPasajeros.prepararseParaViaje()
+		assert.equals(15000, naveSinPasajeros.velocidad())
+	}
+
+	test "Prepararse para viaje con nave con pasajeros"{
+		naveConPasajeros.prepararseParaViaje()
+		assert.equals(300000, naveConPasajeros.velocidad())
+	}
+
+	test "Nave sin pasajeros se encuentra con enemigo"{
+		naveSinPasajeros.recibirAmenaza()
+		naveSinPasajeros.propulsarse()
+		assert.equals(20000, naveSinPasajeros.velocidad())
+		assert.that(naveSinPasajeros.alarma())
+	}
 }
 
 describe "Nave de combate" {
@@ -83,5 +117,36 @@ describe "Nave de combate" {
 		naveEnAtaque.recibirAmenaza()
 		assert.equals("Enemigo encontrado", naveEnAtaque.ultimoMensaje())
 	}
+
+	test "Prepararse para viaje en reposo" {
+		naveEnReposo.prepararseParaViaje()
+		assert.equals("Saliendo en misión", naveEnReposo.ultimoMensaje())
+		assert.equals(ataque, naveEnReposo.modo())
+		assert.equals(15000, naveEnReposo.velocidad())
+	}
+
+	test "Prepararse para viaje en ataque" {
+		naveEnAtaque.prepararseParaViaje()
+		assert.equals("Volviendo a la base", naveEnAtaque.ultimoMensaje())
+		assert.equals(15000, naveEnAtaque.velocidad())
+	}
 }
 
+describe "Nave de carga de residuos radioactivos" {
+	
+	const naveSinSellar = new NaveDeCargaDeRR()
+	const naveSellada = new NaveDeCargaDeRR(carga = 5000, velocidad = 10000, cerradoAlVacio = true)
+
+	test "recibir amenaza"{
+		naveSellada.recibirAmenaza()
+		assert.equals(0, naveSellada.velocidad())
+		assert.equals(5000, naveSellada.carga())
+	}
+
+	test "Prepararse para viaje"{
+		naveSinSellar.cerradoAlVacio(false)
+		naveSinSellar.prepararseParaViaje()
+		assert.equals(15000, naveSinSellar.velocidad())
+		assert.that(naveSinSellar.cerradoAlVacio())
+	}
+}
